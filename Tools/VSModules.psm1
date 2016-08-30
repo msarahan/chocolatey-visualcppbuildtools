@@ -145,6 +145,7 @@ Install-ChocolateyPackage
 param(
   [string] $packageName,
   [string] $url
+  [string] $sha256
 )
     Write-Debug "Running 'Install-VS' for $packageName with url:`'$url`'";
 
@@ -172,7 +173,8 @@ param(
     $silentArgs = Generate-Install-Arguments-String $packageParameters $adminFile
 
     Write-Output "Install-ChocolateyPackage $packageName $installerType $silentArgs $url -validExitCodes $validExitCodes"
-    Install-ChocolateyPackage $packageName $installerType $silentArgs $url -validExitCodes $validExitCodes
+    Install-ChocolateyPackage $packageName $installerType $silentArgs $url -checksumType='sha256' `
+      -checksum $sha256 -checksum64 $sha256 -validExitCodes $validExitCodes
 }
 
 function Uninstall-VS {
